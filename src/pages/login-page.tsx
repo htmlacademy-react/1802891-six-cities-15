@@ -27,5 +27,5 @@ export default function LoginPage() {
         </section>
       </div>
     </Container>
-  )
+  );
 }
