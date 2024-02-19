@@ -1,8 +1,12 @@
+import { Helmet } from 'react-helmet-async';
 import Container from '../components/container';
 
 export default function LoginPage() {
   return (
     <Container mainClass='page__main--login' pageClass='page--gray page--login'>
+      <Helmet>
+        <title>Registration</title>
+      </Helmet>
       <div className="page__login-container container">
         <section className="login">
           <h1 className="login__title">Sign in</h1>

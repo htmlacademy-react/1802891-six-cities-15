@@ -14,26 +14,29 @@ type TAppProps = {
 export default function App({ count }: TAppProps) {
   return (
     <Routes>
-      <Route
-        path={AppRoute.Main}
-        element={<MainPage count={count} />}
-      />
-      <Route
-        path={AppRoute.Offer}
-        element={<OfferPage />}
-      />
-      <Route
-        path={AppRoute.Favorites}
-        element={<ProtectedRoute hasAccess={authorizationStatus.NoAuth}><FavoritePage /></ProtectedRoute>}
-      />
-      <Route
-        path={AppRoute.Login}
-        element={<LoginPage />}
-      />
-      <Route
-        path='*'
-        element={<NotFoundPage />}
-      />
+      <Route path='/'>
+        <Route
+          index
+          element={<MainPage count={count} />}
+        />
+        <Route
+          path={AppRoute.Offer}
+          element={<OfferPage />}
+        />
+        <Route
+          path={AppRoute.Favorites}
+          element={<ProtectedRoute hasAccess={authorizationStatus.Auth}><FavoritePage /></ProtectedRoute>}
+        />
+        <Route
+          path={AppRoute.Login}
+          element={<LoginPage />}
+        />
+        <Route
+          path='*'
+          element={<NotFoundPage />}
+        />
+      </Route>
+
     </Routes>
   );
 }

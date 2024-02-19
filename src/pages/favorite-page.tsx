@@ -1,10 +1,14 @@
 import Container from '../components/container';
 import Card from '../components/card';
 import FavoriteItems from '../components/favorite-items';
+import { Helmet } from 'react-helmet-async';
 
 export default function FavoritePage() {
   return (
     <Container mainClass='favorites'>
+      <Helmet>
+        <title>Favorite</title>
+      </Helmet>
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
