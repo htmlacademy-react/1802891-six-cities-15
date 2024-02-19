@@ -66,7 +66,7 @@ export default function MainPage({ count }: TMainPageProps) {
               </ul>
             </form>
             <div className="cities__places-list places__list tabs__content">
-              <Card cardClass='cities__card' />
+              <Card cardClass='cities__card' cardPremium />
               <Card cardClass='cities__card' />
               <Card cardClass='cities__card' />
               <Card cardClass='cities__card' />
