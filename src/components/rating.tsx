@@ -10,8 +10,10 @@ export default function Rating({ ratingClass, isRatingValue }: TRating) {
         <span style={{ width: '80%' }}></span>
         <span className="visually-hidden">Rating</span>
       </div>
-      {isRatingValue ?
-        <span className="offer__rating-value rating__value">4.8</span> : ''}
+      {isRatingValue &&
+        <span className="offer__rating-value rating__value">4.8</span>}
     </div>
+
+
   );
 }

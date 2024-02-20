@@ -7,10 +7,10 @@ type TCardProps = {
 export default function Card({ cardClass, cardPremium = false }: TCardProps) {
   return (
     <article className={`${cardClass} place-card`}>
-      {cardPremium ?
+      {cardPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
-        </div> : ''}
+        </div>}
 
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">

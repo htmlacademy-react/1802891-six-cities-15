@@ -2,10 +2,14 @@ import Container from '../components/container';
 import Card from '../components/card';
 import OfferInside from '../components/offer-inside';
 import Rating from '../components/rating';
+import { Helmet } from 'react-helmet-async';
 
 export default function OfferPage() {
   return (
     <Container mainClass='offer'>
+      <Helmet>
+        <title>Offer</title>
+      </Helmet>
       <section className="offer">
         <div className="offer__gallery-container container">
           <div className="offer__gallery">
