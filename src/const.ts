@@ -2,7 +2,7 @@ export enum AppRoute {
   Login = 'login',
   Main = '/',
   Favorites = 'favorites',
-  Offer = 'offer',
+  Offer = 'offer/:id',
 }
 
 export const authorizationStatus = {
@@ -10,3 +10,4 @@ export const authorizationStatus = {
   NoAuth: false,
 };
 
+export const CountStar: number = 5;
