@@ -2,7 +2,7 @@ import MainPage from '../pages/main-page';
 import OfferPage from '../pages/offer-page';
 import FavoritePage from '../pages/favorite-page';
 import LoginPage from '../pages/login-page';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useParams } from 'react-router-dom';
 import { AppRoute, authorizationStatus } from '../const';
 import NotFoundPage from '../pages/not-found-page';
 import ProtectedRoute from './protected-route';
@@ -13,6 +13,7 @@ type TAppProps = {
 }
 
 export default function App({ offers }: TAppProps) {
+  const { offerId } = useParams();
   return (
     <Routes>
       <Route path='/'>
@@ -21,7 +22,7 @@ export default function App({ offers }: TAppProps) {
           element={<MainPage offers={offers} />}
         />
         <Route
-          path={AppRoute.Offer}
+          path={`/${AppRoute.Offer}/:${offerId}`}
           element={<OfferPage offers={offers} />}
         />
         <Route

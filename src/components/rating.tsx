@@ -12,7 +12,7 @@ export default function Rating({ ratingClass, isRatingValue, rating }: TRating) 
         <span className="visually-hidden">Rating</span>
       </div>
       {isRatingValue &&
-        <span className="offer__rating-value rating__value">4.8</span>}
+        <span className="offer__rating-value rating__value">{rating}</span>}
     </div>
 
 
