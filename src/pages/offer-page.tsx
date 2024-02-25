@@ -3,8 +3,18 @@ import Card from '../components/card';
 import OfferInside from '../components/offer-inside';
 import Rating from '../components/rating';
 import { Helmet } from 'react-helmet-async';
+import { Offer } from '../types/offer';
+import CommentsTemplate from '../components/comments-template';
+import { CountStar, optionCard } from '../const';
+import { useParams } from 'react-router-dom';
 
-export default function OfferPage() {
+type TOfferPageProps = {
+  offers: Offer[];
+}
+
+export default function OfferPage({ offers }: TOfferPageProps) {
+  const { offerId } = useParams();
+  const dataOffer = offers.find((offer) => offer.id === offerId);
   return (
     <Container mainClass='offer'>
       <Helmet>
@@ -13,34 +23,24 @@ export default function OfferPage() {
       <section className="offer">
         <div className="offer__gallery-container container">
           <div className="offer__gallery">
-            <div className="offer__image-wrapper">
-              <img className="offer__image" src="img/room.jpg" alt="Photo studio" />
-            </div>
-            <div className="offer__image-wrapper">
-              <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio" />
-            </div>
-            <div className="offer__image-wrapper">
-              <img className="offer__image" src="img/apartment-02.jpg" alt="Photo studio" />
-            </div>
-            <div className="offer__image-wrapper">
-              <img className="offer__image" src="img/apartment-03.jpg" alt="Photo studio" />
-            </div>
-            <div className="offer__image-wrapper">
-              <img className="offer__image" src="img/studio-01.jpg" alt="Photo studio" />
-            </div>
-            <div className="offer__image-wrapper">
-              <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio" />
-            </div>
+            {dataOffer.images.map((image: string) => (
+              <div key={image.slice(0, image.length - 6)} className="offer__image-wrapper">
+                <img className="offer__image" src={`${image}`} alt="Photo studio" />
+              </div>
+            )
+            )}
           </div>
         </div>
         <div className="offer__container container">
           <div className="offer__wrapper">
-            <div className="offer__mark">
-              <span>Premium</span>
-            </div>
+            {dataOffer.isPremium &&
+              <div className="offer__mark">
+                <span>Premium</span>
+              </div>}
+
             <div className="offer__name-wrapper">
               <h1 className="offer__name">
-                Beautiful &amp; luxurious studio at great location
+                {dataOffer.title}
               </h1>
               <button className="offer__bookmark-button button" type="button">
                 <svg className="offer__bookmark-icon" width="31" height="33">
@@ -49,48 +49,41 @@ export default function OfferPage() {
                 <span className="visually-hidden">To bookmarks</span>
               </button>
             </div>
-            <Rating ratingClass='offer' isRatingValue />
+            <Rating ratingClass='offer' rating={dataOffer.rating} isRatingValue />
             <ul className="offer__features">
               <li className="offer__feature offer__feature--entire">
-                Apartment
+                {dataOffer.type && dataOffer.type}
               </li>
               <li className="offer__feature offer__feature--bedrooms">
-                3 Bedrooms
+                {dataOffer.bedrooms && `${dataOffer.bedrooms} Bedrooms`}
               </li>
               <li className="offer__feature offer__feature--adults">
-                Max 4 adults
+                {dataOffer.maxAdults && `Max ${dataOffer.maxAdults} adults`}
               </li>
             </ul>
             <div className="offer__price">
-              <b className="offer__price-value">&euro;120</b>
+              <b className="offer__price-value">&euro;{dataOffer.price}</b>
               <span className="offer__price-text">&nbsp;night</span>
             </div>
             <div className="offer__inside">
               <h2 className="offer__inside-title">What&apos;s inside</h2>
               <ul className="offer__inside-list">
-                <OfferInside textOffer='Wi-Fi' />
-                <OfferInside textOffer='Washing machine' />
-                <OfferInside textOffer='Towels' />
-                <OfferInside textOffer='Heating' />
-                <OfferInside textOffer='Coffee machine' />
-                <OfferInside textOffer='Baby seat' />
-                <OfferInside textOffer='Dishwasher' />
-                <OfferInside textOffer='Cabel TV' />
-                <OfferInside textOffer='Fridge' />
+                {dataOffer.goods.map((good) => <OfferInside key={good} textOffer={good} />)}
               </ul>
             </div>
             <div className="offer__host">
               <h2 className="offer__host-title">Meet the host</h2>
               <div className="offer__host-user user">
                 <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
-                  <img className="offer__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
+                  <img className="offer__avatar user__avatar" src={dataOffer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                 </div>
                 <span className="offer__user-name">
-                  Angelina
+                  {dataOffer.host.name}
                 </span>
-                <span className="offer__user-status">
-                  Pro
-                </span>
+                {dataOffer.host.isPro &&
+                  <span className="offer__user-status">
+                    Pro
+                  </span>}
               </div>
               <div className="offer__description">
                 <p className="offer__text">
@@ -114,7 +107,7 @@ export default function OfferPage() {
                     </span>
                   </div>
                   <div className="reviews__info">
-                    <Rating ratingClass='reviews' />
+                    <Rating ratingClass='reviews' rating={dataOffer.rating} />
                     <p className="reviews__text">
                       A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
                     </p>
@@ -122,52 +115,7 @@ export default function OfferPage() {
                   </div>
                 </li>
               </ul>
-              <form className="reviews__form form" action="#" method="post">
-                <label className="reviews__label form__label" htmlFor="review">Your review</label>
-                <div className="reviews__rating-form form__rating">
-                  <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio" />
-                  <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-                    <svg className="form__star-image" width="37" height="33">
-                      <use xlinkHref="#icon-star"></use>
-                    </svg>
-                  </label>
-
-                  <input className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio" />
-                  <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-                    <svg className="form__star-image" width="37" height="33">
-                      <use xlinkHref="#icon-star"></use>
-                    </svg>
-                  </label>
-
-                  <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio" />
-                  <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-                    <svg className="form__star-image" width="37" height="33">
-                      <use xlinkHref="#icon-star"></use>
-                    </svg>
-                  </label>
-
-                  <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio" />
-                  <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-                    <svg className="form__star-image" width="37" height="33">
-                      <use xlinkHref="#icon-star"></use>
-                    </svg>
-                  </label>
-
-                  <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio" />
-                  <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-                    <svg className="form__star-image" width="37" height="33">
-                      <use xlinkHref="#icon-star"></use>
-                    </svg>
-                  </label>
-                </div>
-                <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
-                <div className="reviews__button-wrapper">
-                  <p className="reviews__help">
-                    To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
-                  </p>
-                  <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
-                </div>
-              </form>
+              <CommentsTemplate countStar={CountStar} />
             </section>
           </div>
         </div>
@@ -177,10 +125,7 @@ export default function OfferPage() {
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
           <div className="near-places__list places__list">
-            <Card cardClass='near-places__card' />
-            <Card cardClass='near-places__card' />
-            <Card cardClass='near-places__card' />
-            <Card cardClass='near-places__card' />
+            {offers.map((offer) => <Card key={offer.id} optionCard={optionCard.CITIES_CARD} offer={offer} />)}
           </div>
         </section>
       </div>

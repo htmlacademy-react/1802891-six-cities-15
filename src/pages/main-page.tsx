@@ -1,11 +1,12 @@
 import Container from '../components/container';
-import Card from '../components/card';
+import { Offer } from '../types/offer';
+import ListCards from '../components/list-cards';
 
 type TMainPageProps = {
-  count: number;
+  offers: Offer[];
 }
 
-export default function MainPage({ count }: TMainPageProps) {
+export default function MainPage({ offers }: TMainPageProps) {
   return (
     <Container pageClass='page--gray page--main' mainClass='index'>
       <h1 className="visually-hidden">Cities</h1>
@@ -49,7 +50,7 @@ export default function MainPage({ count }: TMainPageProps) {
         <div className="cities__places-container container">
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">{count} places to stay in Amsterdam</b>
+            <b className="places__found">{offers.length} places to stay in Amsterdam</b>
             <form className="places__sorting" action="#" method="get">
               <span className="places__sorting-caption">Sort by</span>
               <span className="places__sorting-type" tabIndex={0}>
@@ -65,13 +66,7 @@ export default function MainPage({ count }: TMainPageProps) {
                 <li className="places__option" tabIndex={0}>Top rated first</li>
               </ul>
             </form>
-            <div className="cities__places-list places__list tabs__content">
-              <Card cardClass='cities__card' cardPremium />
-              <Card cardClass='cities__card' />
-              <Card cardClass='cities__card' />
-              <Card cardClass='cities__card' />
-              <Card cardClass='cities__card' />
-            </div>
+            <ListCards offers={offers} />
           </section>
           <div className="cities__right-section">
             <section className="cities__map map"></section>

@@ -6,30 +6,31 @@ import { Route, Routes } from 'react-router-dom';
 import { AppRoute, authorizationStatus } from '../const';
 import NotFoundPage from '../pages/not-found-page';
 import ProtectedRoute from './protected-route';
+import { Offer } from '../types/offer';
 
 type TAppProps = {
-  count: number;
+  offers: Offer[];
 }
 
-export default function App({ count }: TAppProps) {
+export default function App({ offers }: TAppProps) {
   return (
     <Routes>
       <Route path='/'>
         <Route
           index
-          element={<MainPage count={count} />}
+          element={<MainPage offers={offers} />}
         />
         <Route
-          path={AppRoute.Offer}
-          element={<OfferPage />}
+          path={`/${AppRoute.Offer}/:offerId`}
+          element={<OfferPage offers={offers} />}
         />
         <Route
           path={AppRoute.Favorites}
-          element={<ProtectedRoute hasAccess={authorizationStatus.Auth}><FavoritePage /></ProtectedRoute>}
+          element={<ProtectedRoute hasAccess={authorizationStatus.AUTH}> <FavoritePage offers={offers} /></ProtectedRoute>}
         />
         <Route
           path={AppRoute.Login}
-          element={<LoginPage />}
+          element={<LoginPage navigation={false} />}
         />
         <Route
           path='*'

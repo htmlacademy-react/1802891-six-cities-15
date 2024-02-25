@@ -6,12 +6,13 @@ type TContainerProps = {
   children: ReactNode;
   pageClass?: string;
   mainClass: string;
+  navigation?: boolean;
 }
 
-export default function Container({ children, pageClass, mainClass }: TContainerProps) {
+export default function Container({ children, pageClass, mainClass, navigation = true }: TContainerProps) {
   return (
     <div className={clsx('page', pageClass && pageClass)}>
-      <Header navigation />
+      <Header navigation={navigation} />
       <main className={clsx('page__main page__main--', mainClass && mainClass)}>
         {children}
       </main>

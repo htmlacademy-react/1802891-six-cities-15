@@ -2,8 +2,14 @@ import Container from '../components/container';
 import Card from '../components/card';
 import FavoriteItems from '../components/favorite-items';
 import { Helmet } from 'react-helmet-async';
+import { Offer } from '../types/offer';
+import { optionCard } from '../const';
 
-export default function FavoritePage() {
+type TOfferPageProps = {
+  offers: Offer[];
+}
+
+export default function FavoritePage({ offers }: TOfferPageProps) {
   return (
     <Container mainClass='favorites'>
       <Helmet>
@@ -14,12 +20,11 @@ export default function FavoritePage() {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              <FavoriteItems>
-                <Card cardClass='favorites__card' />
-              </FavoriteItems>
-              <FavoriteItems>
-                <Card cardClass='favorites__card' />
-              </FavoriteItems>
+              {offers.map((offer) => (
+                <FavoriteItems key={offer.id} offer={offer}>
+                  <Card optionCard={optionCard.FAVORITES_CARD} offer={offer} />
+                </FavoriteItems>)
+              )}
             </ul>
           </section>
         </div>
