@@ -1,9 +1,13 @@
 import { Helmet } from 'react-helmet-async';
 import Container from '../components/container';
 
-export default function LoginPage() {
+type LoginPage = {
+  navigation: boolean;
+}
+
+export default function LoginPage({ navigation }: LoginPage) {
   return (
-    <Container mainClass='page__main--login' pageClass='page--gray page--login'>
+    <Container mainClass='page__main--login' pageClass='page--gray page--login' navigation={navigation}>
       <Helmet>
         <title>Registration</title>
       </Helmet>

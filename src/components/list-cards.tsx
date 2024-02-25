@@ -1,4 +1,5 @@
-import { SyntheticEvent, useState } from 'react';
+// import { MouseEvent, useState } from 'react';
+import { optionCard } from '../const';
 import { Offer } from '../types/offer';
 import Card from './card';
 
@@ -7,18 +8,18 @@ type TListCardsProps = {
 }
 
 export default function ListCards({ offers }: TListCardsProps) {
-  const [card, setCard] = useState(offers);
+  // const [card, setCard] = useState({ id: '' });
 
-  const onPointingCardMouseOver = (event: SyntheticEvent) => {
-    if (event.target.closest('.cities__card')) {
-      console.log(event);
-    }
-
-  };
+  // const onPointingCardMouseOver = ({ target }: MouseEvent<HTMLDivElement>) => {
+  //   if (target.closest('.place-card')) {
+  //   setCard(...card, id: target)
+  //   }
+  // onMouseOver={onPointingCardMouseOver}
+  // };
 
   return (
-    <div className="cities__places-list places__list tabs__content" onMouseOver={onPointingCardMouseOver}>
-      {offers.map((offer) => <Card key={offer.id} cardClass='cities__card' offer={offer} />)}
+    <div className="cities__places-list places__list tabs__content">
+      {offers.map((offer) => <Card key={offer.id} optionCard={optionCard.CITIES_CARD} offer={offer} />)}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 type TRating = {
   ratingClass: string;
   isRatingValue?: boolean;
-  rating?: number;
+  rating: number;
 }
 
 export default function Rating({ ratingClass, isRatingValue, rating }: TRating) {

@@ -1,5 +1,4 @@
 import Container from '../components/container';
-import Card from '../components/card';
 import { Offer } from '../types/offer';
 import ListCards from '../components/list-cards';
 

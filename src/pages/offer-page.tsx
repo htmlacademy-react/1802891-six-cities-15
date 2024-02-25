@@ -5,17 +5,16 @@ import Rating from '../components/rating';
 import { Helmet } from 'react-helmet-async';
 import { Offer } from '../types/offer';
 import CommentsTemplate from '../components/comments-template';
-import { CountStar } from '../const';
-import { useLocation } from 'react-router-dom';
+import { CountStar, optionCard } from '../const';
+import { useParams } from 'react-router-dom';
 
 type TOfferPageProps = {
   offers: Offer[];
 }
 
 export default function OfferPage({ offers }: TOfferPageProps) {
-  const location = useLocation();
-  const dataOffer: Offer = location.state
-  console.log(dataOffer);
+  const { offerId } = useParams();
+  const dataOffer = offers.find((offer) => offer.id === offerId);
   return (
     <Container mainClass='offer'>
       <Helmet>
@@ -24,10 +23,11 @@ export default function OfferPage({ offers }: TOfferPageProps) {
       <section className="offer">
         <div className="offer__gallery-container container">
           <div className="offer__gallery">
-            {dataOffer.images.map((image: string) =>
-            (<div className="offer__image-wrapper">
-              <img className="offer__image" src={`${image}`} alt="Photo studio" />
-            </div>)
+            {dataOffer.images.map((image: string) => (
+              <div key={image.slice(0, image.length - 6)} className="offer__image-wrapper">
+                <img className="offer__image" src={`${image}`} alt="Photo studio" />
+              </div>
+            )
             )}
           </div>
         </div>
@@ -68,7 +68,7 @@ export default function OfferPage({ offers }: TOfferPageProps) {
             <div className="offer__inside">
               <h2 className="offer__inside-title">What&apos;s inside</h2>
               <ul className="offer__inside-list">
-                {dataOffer.goods.map((good) => <OfferInside textOffer={good} />)}
+                {dataOffer.goods.map((good) => <OfferInside key={good} textOffer={good} />)}
               </ul>
             </div>
             <div className="offer__host">
@@ -107,7 +107,7 @@ export default function OfferPage({ offers }: TOfferPageProps) {
                     </span>
                   </div>
                   <div className="reviews__info">
-                    <Rating ratingClass='reviews' />
+                    <Rating ratingClass='reviews' rating={dataOffer.rating} />
                     <p className="reviews__text">
                       A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
                     </p>
@@ -115,7 +115,7 @@ export default function OfferPage({ offers }: TOfferPageProps) {
                   </div>
                 </li>
               </ul>
-              <CommentsTemplate key={1} countStar={CountStar} />
+              <CommentsTemplate countStar={CountStar} />
             </section>
           </div>
         </div>
@@ -125,7 +125,7 @@ export default function OfferPage({ offers }: TOfferPageProps) {
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
           <div className="near-places__list places__list">
-            {offers.map((offer) => <Card key={offer.id} cardClass='cities__card' offer={offer} />)}
+            {offers.map((offer) => <Card key={offer.id} optionCard={optionCard.CITIES_CARD} offer={offer} />)}
           </div>
         </section>
       </div>

@@ -3,6 +3,7 @@ import Card from '../components/card';
 import FavoriteItems from '../components/favorite-items';
 import { Helmet } from 'react-helmet-async';
 import { Offer } from '../types/offer';
+import { optionCard } from '../const';
 
 type TOfferPageProps = {
   offers: Offer[];
@@ -21,7 +22,7 @@ export default function FavoritePage({ offers }: TOfferPageProps) {
             <ul className="favorites__list">
               {offers.map((offer) => (
                 <FavoriteItems key={offer.id} offer={offer}>
-                  <Card cardClass='favorites__card' offer={offer} />
+                  <Card optionCard={optionCard.FAVORITES_CARD} offer={offer} />
                 </FavoriteItems>)
               )}
             </ul>
