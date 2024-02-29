@@ -23,6 +23,11 @@ const optionCard = {
   }
 };
 
+const OptionListCard = {
+  FAVORITES_CARD: 'near-places__list places__list',
+  CITIES_CARD: 'cities__places-list places__list tabs__content',
+};
+
 const URL_MARKER_DEFAULT = '../markup/img/pin.svg';
 
 const URL_MARKER_CURRENT = '../markup/img/pin-active.svg';
@@ -30,4 +35,4 @@ const URL_MARKER_CURRENT = '../markup/img/pin-active.svg';
 
 const CountStar: number = 5;
 
-export { CountStar, AppRoute, AuthorizationStatus as authorizationStatus, optionCard, URL_MARKER_DEFAULT, URL_MARKER_CURRENT };
+export { CountStar, AppRoute, AuthorizationStatus as authorizationStatus, optionCard, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, OptionListCard };
