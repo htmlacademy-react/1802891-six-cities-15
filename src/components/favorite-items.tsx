@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { OfferPreviews } from '../types/offer-preview';
 
 type TFavoriteItemsProps = {
   children: ReactNode;

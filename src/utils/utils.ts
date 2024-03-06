@@ -1,4 +1,5 @@
 import { Offer } from '../types/offer';
+import dayjs from 'dayjs';
 
 function getFavoritesByLocation(favorites: Offer[]) {
   return favorites.reduce<{ [key: string]: Offer[] }>((acc, current) => {
@@ -14,4 +15,8 @@ function getFavoritesByLocation(favorites: Offer[]) {
   }, {});
 }
 
-export { getFavoritesByLocation };
+function humanizeOrderData(date: string, format: string) {
+  return date ? dayjs(date).format(format) : '';
+}
+
+export { getFavoritesByLocation, humanizeOrderData };

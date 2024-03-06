@@ -5,6 +5,7 @@ import ListCards from '../components/list-cards';
 import Map from '../components/map';
 import { MouseEvent, useState } from 'react';
 import MainEmpty from '../components/main-empty';
+import { OptionListCard } from '../const';
 
 type TMainPageProps = {
   offers: Offer[];
@@ -105,12 +106,14 @@ export default function MainPage({ offers }: TMainPageProps) {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <ListCards offers={offers} onListItemHover={handleListItemHover} />
+              <ListCards offers={offers} onListItemHover={handleListItemHover} extraClass={OptionListCard.CITIES_CARD} />
             </section> : <MainEmpty currentCity={selectedCity} />}
 
           {offers.length &&
             <div className="cities__right-section">
-              <Map city={selectedCity} offers={offers} selectedOffer={selectedOffer} />
+              <section className="offer__map map">
+                <Map city={selectedCity} offers={offers} selectedOffer={selectedOffer} />
+              </section>
             </div>}
 
         </div>

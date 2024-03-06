@@ -1,18 +1,34 @@
 import Container from '../components/container';
-import Card from '../components/card';
 import OfferInside from '../components/offer-inside';
 import Rating from '../components/rating';
 import { Helmet } from 'react-helmet-async';
 import { Offer } from '../types/offer';
 import CommentsTemplate from '../components/comments-template';
-import { CountStar, optionCard } from '../const';
+import { CountStar } from '../const';
 import { useParams } from 'react-router-dom';
+import { Comments } from '../mocks/comments';
+import ReviewsComments from '../components/reviews-comments';
+import Map from '../components/map';
+import { useState } from 'react';
+import { OptionListCard } from '../const';
+import ListCards from '../components/list-cards';
 
 type TOfferPageProps = {
   offers: Offer[];
 }
 
 export default function OfferPage({ offers }: TOfferPageProps) {
+  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(
+    undefined
+  );
+
+  const handleListItemHover = (currentCard: Offer) => {
+    const currentPoint = offers.find((offer) => offer.title === currentCard.title);
+    if (currentPoint !== undefined) {
+      setSelectedOffer(currentPoint);
+    }
+  };
+
   const { offerId } = useParams();
   const dataOffer = offers.find((offer) => offer.id === offerId);
 
@@ -29,7 +45,7 @@ export default function OfferPage({ offers }: TOfferPageProps) {
         <div className="offer__gallery-container container">
           <div className="offer__gallery">
             {dataOffer.images.map((image: string) => (
-              <div key={image.slice(0, image.length - 6)} className="offer__image-wrapper">
+              <div key={image} className="offer__image-wrapper">
                 <img className="offer__image" src={`${image}`} alt="Photo studio" />
               </div>
             )
@@ -101,37 +117,19 @@ export default function OfferPage({ offers }: TOfferPageProps) {
             </div>
             <section className="offer__reviews reviews">
               <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-              <ul className="reviews__list">
-                <li className="reviews__item">
-                  <div className="reviews__user user">
-                    <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                      <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar" />
-                    </div>
-                    <span className="reviews__user-name">
-                      Max
-                    </span>
-                  </div>
-                  <div className="reviews__info">
-                    <Rating ratingClass='reviews' rating={dataOffer.rating} />
-                    <p className="reviews__text">
-                      A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                    </p>
-                    <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
-                  </div>
-                </li>
-              </ul>
+              <ReviewsComments comments={Comments} />
               <CommentsTemplate countStar={CountStar} />
             </section>
           </div>
         </div>
-        <section className="offer__map map"></section>
+        <section className="offer__map map">
+          <Map city={dataOffer.city} offers={offers} selectedOffer={selectedOffer} />
+        </section>
       </section>
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <div className="near-places__list places__list">
-            {offers.map((offer) => <Card key={offer.id} optionCard={optionCard.CITIES_CARD} offer={offer} />)}
-          </div>
+          <ListCards offers={offers} onListItemHover={handleListItemHover} extraClass={OptionListCard.FAVORITES_CARD} />
         </section>
       </div>
     </Container>

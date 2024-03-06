@@ -49,7 +49,7 @@ export default function Map(props: MapProps): JSX.Element {
   return (
     <div
       ref={mapRef}
-      style={{ width: '100%' }}
+      style={{ width: '100%', height: '100%' }}
     >
 
     </div>
