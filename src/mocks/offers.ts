@@ -19,7 +19,7 @@ export const offers: Offer[] = [
       longitude: 4.673877537499948,
       zoom: 8
     },
-    isFavorite: false,
+    isFavorite: true,
     isPremium: false,
     rating: 3.5,
     previewImage: 'https://url-to-image/image.png',
@@ -36,7 +36,7 @@ export const offers: Offer[] = [
   },
   {
     id: '70faa463-6bf2-40ec-bca9-4c5d055c5c7f',
-    title: 'Waterfront with extraordinary view',
+    title: 'Canal View Prinsengracht',
     description: 'Design interior in most sympathetic area! Complitely renovated, well-equipped, cosy studio in idyllic, over 100 years old wooden house. Calm street, fast connection to center and airport.',
     type: 'hotel',
     price: 217,
@@ -95,14 +95,14 @@ export const offers: Offer[] = [
     city: {
       name: 'Paris',
       location: {
-        latitude: 48.85661,
-        longitude: 2.351499,
+        latitude: 48.84661,
+        longitude: 2.352499,
         zoom: 13
       }
     },
     location: {
-      latitude: 48.868610000000004,
-      longitude: 2.342499,
+      latitude: 48.858610000000006,
+      longitude: 2.330499,
       zoom: 16
     },
     goods: [
@@ -117,7 +117,7 @@ export const offers: Offer[] = [
       avatarUrl: 'https://15.design.htmlacademy.pro/static/host/avatar-angelina.jpg'
     },
     isPremium: true,
-    isFavorite: false,
+    isFavorite: true,
     rating: 1.5,
     bedrooms: 5,
     maxAdults: 6
@@ -139,14 +139,14 @@ export const offers: Offer[] = [
     city: {
       name: 'Paris',
       location: {
-        latitude: 48.85661,
-        longitude: 2.351499,
+        latitude: 48.85761,
+        longitude: 2.351559,
         zoom: 13
       }
     },
     location: {
-      latitude: 48.868610000000004,
-      longitude: 2.342499,
+      latitude: 48.834610000000005,
+      longitude: 2.335499,
       zoom: 16
     },
     goods: [
@@ -163,7 +163,7 @@ export const offers: Offer[] = [
       avatarUrl: 'https://15.design.htmlacademy.pro/static/host/avatar-angelina.jpg'
     },
     isPremium: false,
-    isFavorite: false,
+    isFavorite: true,
     rating: 4.1,
     bedrooms: 3,
     maxAdults: 6

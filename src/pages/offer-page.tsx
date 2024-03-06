@@ -15,6 +15,11 @@ type TOfferPageProps = {
 export default function OfferPage({ offers }: TOfferPageProps) {
   const { offerId } = useParams();
   const dataOffer = offers.find((offer) => offer.id === offerId);
+
+  if (dataOffer === undefined) {
+    return;
+  }
+
   return (
     <Container mainClass='offer'>
       <Helmet>

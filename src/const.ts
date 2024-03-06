@@ -23,6 +23,11 @@ const optionCard = {
   }
 };
 
+const URL_MARKER_DEFAULT = '../markup/img/pin.svg';
+
+const URL_MARKER_CURRENT = '../markup/img/pin-active.svg';
+
+
 const CountStar: number = 5;
 
-export { CountStar, AppRoute, AuthorizationStatus as authorizationStatus, optionCard };
+export { CountStar, AppRoute, AuthorizationStatus as authorizationStatus, optionCard, URL_MARKER_DEFAULT, URL_MARKER_CURRENT };

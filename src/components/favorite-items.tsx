@@ -3,15 +3,15 @@ import { OfferPreviews } from '../types/offer-preview';
 
 type TFavoriteItemsProps = {
   children: ReactNode;
-  offer: OfferPreviews;
+  city: string;
 }
-export default function FavoriteItems({ children, offer }: TFavoriteItemsProps) {
+export default function FavoriteItems({ children, city }: TFavoriteItemsProps) {
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
           <a className="locations__item-link" href="#">
-            <span>{offer.city.name}</span>
+            <span>{city}</span>
           </a>
         </div>
       </div>

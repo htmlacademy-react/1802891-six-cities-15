@@ -4,12 +4,15 @@ import FavoriteItems from '../components/favorite-items';
 import { Helmet } from 'react-helmet-async';
 import { Offer } from '../types/offer';
 import { optionCard } from '../const';
+import FavoritesEmpty from '../components/favorites-empty';
+import { getFavoritesByLocation } from '../utils/utils';
 
 type TOfferPageProps = {
   offers: Offer[];
 }
 
 export default function FavoritePage({ offers }: TOfferPageProps) {
+  const favorites = getFavoritesByLocation(offers);
   return (
     <Container mainClass='favorites'>
       <Helmet>
@@ -17,16 +20,18 @@ export default function FavoritePage({ offers }: TOfferPageProps) {
       </Helmet>
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              {offers.map((offer) => (
-                <FavoriteItems key={offer.id} offer={offer}>
-                  <Card optionCard={optionCard.FAVORITES_CARD} offer={offer} />
-                </FavoriteItems>)
-              )}
-            </ul>
-          </section>
+          {offers.length > 0 ?
+            <section className="favorites">
+              <h1 className="favorites__title">Saved listing</h1>
+              <ul className="favorites__list">
+                {Object.entries(favorites).map(([location, gropedFavorites]) => (
+                  <FavoriteItems key={location} city={location}>
+                    {gropedFavorites.map((favorite) => <Card key={favorite.id} optionCard={optionCard.FAVORITES_CARD} offer={favorite} />)}
+                  </FavoriteItems>
+                )
+                )}
+              </ul>
+            </section> : <FavoritesEmpty />}
         </div>
       </main>
       <footer className="footer container">
