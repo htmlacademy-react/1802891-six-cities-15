@@ -10,7 +10,7 @@ const AuthorizationStatus = {
   NO_AUTH: false,
 };
 
-const optionCard = {
+const OptionCard = {
   CITIES_CARD: {
     classCard: 'cities__card',
     width: '260',
@@ -22,6 +22,12 @@ const optionCard = {
     height: '110'
   }
 };
+
+const MapSize = {
+  WIDTH: '100%',
+  HEIGHT: '100%',
+};
+
 
 const OptionListCard = {
   FAVORITES_CARD: 'near-places__list places__list',
@@ -35,4 +41,4 @@ const URL_MARKER_CURRENT = '../markup/img/pin-active.svg';
 
 const CountStar: number = 5;
 
-export { CountStar, AppRoute, AuthorizationStatus as authorizationStatus, optionCard, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, OptionListCard };
+export { CountStar, AppRoute, AuthorizationStatus as authorizationStatus, OptionCard, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, OptionListCard, MapSize };

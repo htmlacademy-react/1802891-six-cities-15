@@ -2,7 +2,6 @@ import Container from '../components/container';
 import OfferInside from '../components/offer-inside';
 import Rating from '../components/rating';
 import { Helmet } from 'react-helmet-async';
-import { Offer } from '../types/offer';
 import CommentsTemplate from '../components/comments-template';
 import { CountStar } from '../const';
 import { useParams } from 'react-router-dom';
@@ -12,20 +11,19 @@ import Map from '../components/map';
 import { useState } from 'react';
 import { OptionListCard } from '../const';
 import ListCards from '../components/list-cards';
+import { OfferPreviews } from '../types/offer-preview';
+import { useAppSelector } from '../hooks';
 
-type TOfferPageProps = {
-  offers: Offer[];
-}
+export default function OfferPage() {
+  const offers = useAppSelector((state) => state.offers);
 
-export default function OfferPage({ offers }: TOfferPageProps) {
-  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(
-    undefined
+  const [selectedOffer, setSelectedOffer] = useState<OfferPreviews | null>(
+    null
   );
 
-  const handleListItemHover = (currentCard: Offer) => {
-    const currentPoint = offers.find((offer) => offer.title === currentCard.title);
-    if (currentPoint !== undefined) {
-      setSelectedOffer(currentPoint);
+  const handleListItemHover = (currentCard: OfferPreviews | null) => {
+    if (currentCard !== null) {
+      setSelectedOffer(currentCard);
     }
   };
 

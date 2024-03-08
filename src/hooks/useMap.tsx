@@ -8,9 +8,10 @@ function useMap(
 ): Map | null {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
-
+  console.log('1 условие:', isRenderedRef.current, '2 условие: ', mapRef.current);
   useEffect(() => {
     if (mapRef.current !== null && !isRenderedRef.current) {
+      console.log('rfhnf', city);
       const instance = new Map(mapRef.current, {
         center: {
           lat: city.location.latitude,
@@ -28,10 +29,12 @@ function useMap(
       );
 
       instance.addLayer(layer);
-
       setMap(instance);
     }
-    isRenderedRef.current = true;
+
+    return () => {
+      isRenderedRef.current = true;
+    };
   }, [mapRef, city]);
 
   return map;
