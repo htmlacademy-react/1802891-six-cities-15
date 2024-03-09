@@ -12,7 +12,7 @@ const initialState = {
 const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(selectCity, (state, action) => {
-      state.city = action.payload.city.name;
+      state.city = action.payload;
       state.offers = [...offers].filter((offer) => offer.city.name === state.city);
     })
     .addCase(sortOffer, (state, action) => {

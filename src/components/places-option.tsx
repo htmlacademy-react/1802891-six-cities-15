@@ -6,8 +6,10 @@ type PlacesOptionProps = {
 }
 
 export default function PlacesOption({ place, handelSortOfferClick }: PlacesOptionProps) {
-  const onSortOfferClick = (evt: SyntheticEvent) => {
-    handelSortOfferClick(evt.target.textContent);
+  const onSortOfferClick = (evt: SyntheticEvent<HTMLLIElement>) => {
+    if (evt.currentTarget.textContent !== null) {
+      handelSortOfferClick(evt.currentTarget.textContent);
+    }
   };
   return (
     <li className="places__option" tabIndex={0} onClick={onSortOfferClick}>{place}</li>
