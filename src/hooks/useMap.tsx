@@ -32,9 +32,7 @@ function useMap(
       setMap(instance);
     }
 
-    return () => {
-      isRenderedRef.current = true;
-    };
+    isRenderedRef.current = true;
   }, [mapRef, city]);
 
   return map;

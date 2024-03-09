@@ -19,4 +19,16 @@ function humanizeOrderData(date: string, format: string) {
   return date ? dayjs(date).format(format) : '';
 }
 
-export { getFavoritesByLocation, humanizeOrderData };
+function sortPriceLow(offerA: Offer, offerB: Offer,) {
+  return offerA.price - offerB.price;
+}
+
+function sortPriceHigh(offerA: Offer, offerB: Offer,) {
+  return offerB.price - offerA.price;
+}
+
+function sortRating(offerA: Offer, offerB: Offer,) {
+  return offerB.rating - offerA.rating;
+}
+
+export { getFavoritesByLocation, humanizeOrderData, sortPriceLow, sortPriceHigh, sortRating };
