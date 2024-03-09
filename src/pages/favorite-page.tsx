@@ -2,16 +2,15 @@ import Container from '../components/container';
 import Card from '../components/card';
 import FavoriteItems from '../components/favorite-items';
 import { Helmet } from 'react-helmet-async';
-import { Offer } from '../types/offer';
-import { optionCard } from '../const';
+import { OptionCard } from '../const';
 import FavoritesEmpty from '../components/favorites-empty';
 import { getFavoritesByLocation } from '../utils/utils';
+import { useAppSelector } from '../hooks';
 
-type TOfferPageProps = {
-  offers: Offer[];
-}
 
-export default function FavoritePage({ offers }: TOfferPageProps) {
+export default function FavoritePage() {
+  const offers = useAppSelector((state) => state.offers);
+
   const favorites = getFavoritesByLocation(offers);
   return (
     <Container mainClass='favorites'>
@@ -26,7 +25,7 @@ export default function FavoritePage({ offers }: TOfferPageProps) {
               <ul className="favorites__list">
                 {Object.entries(favorites).map(([location, gropedFavorites]) => (
                   <FavoriteItems key={location} city={location}>
-                    {gropedFavorites.map((favorite) => <Card key={favorite.id} optionCard={optionCard.FAVORITES_CARD} offer={favorite} />)}
+                    {gropedFavorites.map((favorite) => <Card key={favorite.id} optionCard={OptionCard.FAVORITES_CARD} offer={favorite} />)}
                   </FavoriteItems>
                 )
                 )}

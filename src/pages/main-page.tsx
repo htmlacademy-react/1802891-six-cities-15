@@ -1,20 +1,25 @@
 import Container from '../components/container';
 import { City } from '../types/city';
-import { Offer } from '../types/offer';
 import ListCards from '../components/list-cards';
 import Map from '../components/map';
 import { MouseEvent, useState } from 'react';
 import MainEmpty from '../components/main-empty';
 import { OptionListCard } from '../const';
+import { OfferPreviews } from '../types/offer-preview';
+import { locations } from '../mocks/locations';
+import ListLocation from '../components/list-location';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { selectCity } from '../store/action';
+import { offers } from '../mocks/offers';
 
-type TMainPageProps = {
-  offers: Offer[];
-}
 
-export default function MainPage({ offers }: TMainPageProps) {
+export default function MainPage() {
+  const baseOffers = offers;
+  const selectOffers = useAppSelector((state) => state.offers);
+  const dispatch = useAppDispatch();
 
-  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(
-    undefined
+  const [selectedOffer, setSelectedOffer] = useState<OfferPreviews | null>(
+    null
   );
 
   const [selectedCity, setSelectedCity] = useState<City>({
@@ -26,21 +31,21 @@ export default function MainPage({ offers }: TMainPageProps) {
     }
   });
 
-  const handleListItemHover = (currentCard: Offer) => {
-    const currentPoint = offers.find((offer) => offer.title === currentCard.title);
-    if (currentPoint !== undefined) {
-      setSelectedOffer(currentPoint);
-    }
+  const handleListItemHover = (currentCard: OfferPreviews | null) => {
+    setSelectedOffer(currentCard);
   };
 
   const handleCurrentCityClick = (evt: MouseEvent<HTMLSpanElement>) => {
     evt.preventDefault();
 
-    const currentOffer = offers.find((offer) => offer.city.name === evt.target.textContent);
+    const currentOffer = baseOffers.find((offer) => offer.city.name === evt.target.textContent);
 
     if (currentOffer !== undefined) {
-      setSelectedCity({ ...currentOffer?.city });
-      offers.filter((offer) => offer.city.name === currentOffer.city.name);
+      dispatch(selectCity(currentOffer));
+    }
+
+    if (currentOffer !== undefined) {
+      setSelectedCity({ ...currentOffer.city });
     }
 
   };
@@ -50,47 +55,16 @@ export default function MainPage({ offers }: TMainPageProps) {
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
         <section className="locations container">
-          <ul className="locations__list tabs__list" onClick={handleCurrentCityClick}>
-            <li className="locations__item">
-              <a className="locations__item-link tabs__item" href="#">
-                <span>Paris</span>
-              </a>
-            </li>
-            <li className="locations__item">
-              <a className="locations__item-link tabs__item" href="#">
-                <span>Cologne</span>
-              </a>
-            </li>
-            <li className="locations__item">
-              <a className="locations__item-link tabs__item" href="#">
-                <span>Brussels</span>
-              </a>
-            </li>
-            <li className="locations__item">
-              <a className="locations__item-link tabs__item tabs__item--active">
-                <span>Amsterdam</span>
-              </a>
-            </li>
-            <li className="locations__item">
-              <a className="locations__item-link tabs__item" href="#">
-                <span>Hamburg</span>
-              </a>
-            </li>
-            <li className="locations__item">
-              <a className="locations__item-link tabs__item" href="#">
-                <span>Dusseldorf</span>
-              </a>
-            </li>
-          </ul>
+          <ListLocation listLocations={locations} handleCurrentCityClick={handleCurrentCityClick} />
         </section>
       </div>
       <div className="cities">
         <div className="cities__places-container container">
 
-          {offers.length !== 0 ?
+          {selectOffers.length !== 0 ?
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in Amsterdam</b>
+              <b className="places__found">{selectOffers.length} place{selectOffers.length > 1 ? 's' : ''} to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -106,13 +80,13 @@ export default function MainPage({ offers }: TMainPageProps) {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <ListCards offers={offers} onListItemHover={handleListItemHover} extraClass={OptionListCard.CITIES_CARD} />
+              <ListCards offers={selectOffers} onListItemHover={handleListItemHover} extraClass={OptionListCard.CITIES_CARD} />
             </section> : <MainEmpty currentCity={selectedCity} />}
 
-          {offers.length &&
+          {selectOffers.length &&
             <div className="cities__right-section">
-              <section className="offer__map map">
-                <Map city={selectedCity} offers={offers} selectedOffer={selectedOffer} />
+              <section className="cities__map map">
+                <Map city={selectedCity} offers={selectOffers} selectedOffer={selectedOffer} />
               </section>
             </div>}
 
@@ -121,3 +95,4 @@ export default function MainPage({ offers }: TMainPageProps) {
     </Container>
   );
 }
+

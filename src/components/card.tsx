@@ -9,12 +9,22 @@ type TCardProps = {
     width: string;
     height: string;
   };
+  handelPointCardMouseOver?: (currentOffer: OfferPreviews | null) => void;
 }
 
-export default function Card({ offer, optionCard }: TCardProps) {
+export default function Card({ offer, optionCard, handelPointCardMouseOver }: TCardProps) {
   const { width, height, classCard } = optionCard;
+
+  const onPointCardMouseOver = () => {
+    handelPointCardMouseOver(offer);
+  };
+
+  const onPointCardMouseLeave = () => {
+    handelPointCardMouseOver(null);
+  };
+
   return (
-    <article className={`${classCard} place-card`} data-id={offer.id}>
+    <article className={`${classCard} place-card`} onMouseOver={onPointCardMouseOver} onMouseLeave={onPointCardMouseLeave}>
       {offer.isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
@@ -22,27 +32,27 @@ export default function Card({ offer, optionCard }: TCardProps) {
 
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`/${AppRoute.Offer}/${offer.id}`}>
-          <img className="place-card__image" src={`${offer.previewImage}`} width={width} height={height} alt="Place image" data-id={offer.id} />
+          <img className="place-card__image" src={`${offer.previewImage}`} width={width} height={height} alt="Place image" />
         </Link>
       </div>
-      <div className="place-card__info" data-id={offer.id}>
-        <div className="place-card__price-wrapper" data-id={offer.id}>
-          <div className="place-card__price" data-id={offer.id}>
-            <b className="place-card__price-value" data-id={offer.id}>&euro;{offer.price}</b>
-            <span className="place-card__price-text" data-id={offer.id}>&#47;&nbsp;night</span>
+      <div className="place-card__info" >
+        <div className="place-card__price-wrapper" >
+          <div className="place-card__price" >
+            <b className="place-card__price-value" >&euro;{offer.price}</b>
+            <span className="place-card__price-text" >&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button" data-id={offer.id}>
-            <svg className="place-card__bookmark-icon" width="18" height="19" data-id={offer.id}>
+          <button className="place-card__bookmark-button button" type="button" >
+            <svg className="place-card__bookmark-icon" width="18" height="19" >
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
             <span className="visually-hidden">To bookmarks</span>
           </button>
         </div>
-        <Rating ratingClass="place-card" rating={offer.rating} data-id={offer.id} />
-        <h2 className="place-card__name" data-id={offer.id}>
-          <Link to={`/${AppRoute.Offer}/${offer.id}`} state={offer} data-id={offer.id}>{offer.title}</Link>
+        <Rating ratingClass="place-card" rating={offer.rating} />
+        <h2 className="place-card__name" >
+          <Link to={`/${AppRoute.Offer}/${offer.id}`} state={offer} >{offer.title}</Link>
         </h2>
-        <p className="place-card__type" data-id={offer.id}>{offer.type}</p>
+        <p className="place-card__type" >{offer.type}</p>
       </div>
     </article>
   );
