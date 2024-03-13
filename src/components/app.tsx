@@ -4,7 +4,7 @@ import FavoritePage from '../pages/favorite-page';
 import LoginPage from '../pages/login-page';
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute, authorizationStatus } from '../const';
-import NotFoundPage from '../pages/not-found-page';
+import NotFoundPage from '../pages/not-found-page/not-found-page';
 import ProtectedRoute from './protected-route';
 
 export default function App() {

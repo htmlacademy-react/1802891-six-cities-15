@@ -28,7 +28,7 @@ const currentCustomIcon = leaflet.icon({
 
 export default function Map(props: MapProps): JSX.Element {
   const { city, offers, selectedOffer } = props;
-  console.log(city);
+
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -51,6 +51,8 @@ export default function Map(props: MapProps): JSX.Element {
         mapRef.current = null;
       };
     }
+
+
   }, [map, offers, selectedOffer, city]);
 
   return (

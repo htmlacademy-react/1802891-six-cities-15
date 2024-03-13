@@ -1,17 +1,11 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../const';
+import { AppRoute } from '../../const';
 import { Helmet } from 'react-helmet-async';
-
-const divStyle = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  textAlign: 'center'
-};
+import './not-found-page-model.css';
 
 export default function NotFoundPage() {
   return (
-    <div style={divStyle}>
+    <div className='not-found-page-model'>
       <Helmet>
         <title>Not found page</title>
       </Helmet>
