@@ -34,7 +34,21 @@ const OptionListCard = {
   CITIES_CARD: 'cities__places-list places__list tabs__content',
 };
 
-const placesOption = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first',];
+const ListSort = {
+  SORT_POPULAR: 'Popular',
+  SORT_PRICE_HIGH: 'Price: low to high',
+  SORT_PRICE_LOW: 'Price: high to low',
+  SORT_RATED: 'Top rated first',
+};
+
+const ListLocation = {
+  PARIS: 'Paris',
+  COLOGNE: 'Cologne',
+  BRUSSELS: 'Brussels',
+  AMSTERDAM: 'Amsterdam',
+  HAMBURG: 'Hamburg',
+  DUSSELDORF: 'Dusseldorf',
+};
 
 const URL_MARKER_DEFAULT = '../markup/img/pin.svg';
 
@@ -43,4 +57,4 @@ const URL_MARKER_CURRENT = '../markup/img/pin-active.svg';
 
 const CountStar: number = 5;
 
-export { CountStar, AppRoute, AuthorizationStatus as authorizationStatus, OptionCard, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, OptionListCard, MapSize, placesOption };
+export { CountStar, AppRoute, AuthorizationStatus as authorizationStatus, OptionCard, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, OptionListCard, MapSize, ListSort, ListLocation as LocationCity };

@@ -6,7 +6,7 @@ import { SyntheticEvent, useState } from 'react';
 import MainEmpty from '../components/main-empty';
 import { OptionListCard } from '../const';
 import { OfferPreviews } from '../types/offer-preview';
-import { locations } from '../mocks/locations';
+import { LocationCity } from '../const';
 import ListLocation from '../components/list-location';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { selectCity, sortOffer } from '../store/action';
@@ -74,7 +74,7 @@ export default function MainPage() {
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
         <section className="locations container">
-          <ListLocation listLocations={locations} handleCurrentCityClick={handleCurrentCityClick} currentCity={selectedLocation} />
+          <ListLocation listLocations={LocationCity} handleCurrentCityClick={handleCurrentCityClick} currentCity={selectedLocation} />
         </section>
       </div>
       <div className="cities">

@@ -1,16 +1,18 @@
 import Location from './location';
 import { SyntheticEvent } from 'react';
+import { listLocation } from '../types/list-location';
 
 type ListLocation = {
-  listLocations: string[];
+  listLocations: listLocation;
   handleCurrentCityClick: (evt: SyntheticEvent<HTMLSpanElement>) => void;
   currentCity: string;
 }
 
 export default function ListLocation({ listLocations, handleCurrentCityClick, currentCity }: ListLocation) {
+  const listValuesLocations = Object.values(listLocations);
   return (
     <ul className="locations__list tabs__list">
-      {listLocations.map((location) => <Location key={location} city={location} isActive={currentCity === location} handleCurrentCityClick={handleCurrentCityClick} />)}
+      {listValuesLocations.map((location) => <Location key={location} city={location} isActive={currentCity === location} handleCurrentCityClick={handleCurrentCityClick} />)}
     </ul>
   );
 }

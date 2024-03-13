@@ -1,12 +1,12 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { selectCity, sortOffer } from './action';
 import { offers } from '../mocks/offers';
-import { placesOption } from '../const';
-import { sortPriceLow, sortPriceHigh, sortRating } from '../utils/utils';
+import { sortingOffers } from '../hooks/sort';
+import { LocationCity } from '../const';
 
 const initialState = {
-  city: 'Paris',
-  offers: [...offers].filter((offer) => offer.city.name === 'Paris'),
+  city: LocationCity.PARIS,
+  offers: [...offers].filter((offer) => offer.city.name === LocationCity.PARIS),
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -16,20 +16,7 @@ const reducer = createReducer(initialState, (builder) => {
       state.offers = [...offers].filter((offer) => offer.city.name === state.city);
     })
     .addCase(sortOffer, (state, action) => {
-      switch (action.payload) {
-        case placesOption[0]:
-          state.offers = [...offers].filter((offer) => offer.city.name === state.city);
-          break;
-        case placesOption[1]:
-          state.offers = state.offers.sort(sortPriceHigh);
-          break;
-        case placesOption[2]:
-          state.offers = state.offers.sort(sortPriceLow);
-          break;
-        case placesOption[3]:
-          state.offers = state.offers.sort(sortRating);
-          break;
-      }
+      state.offers = sortingOffers(action.payload, state.offers, offers);
     });
 });
 
