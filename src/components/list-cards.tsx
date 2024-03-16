@@ -1,10 +1,9 @@
 import { OptionCard } from '../const';
-import { Offer } from '../types/offer';
 import Card from './card';
 import { OfferPreviews } from '../types/offer-preview';
 
 type ListOfferNearbyProps = {
-  offers: Offer[];
+  offers: OfferPreviews[];
   onListItemHover: (currentCard: OfferPreviews | null) => void;
   extraClass: string;
 }

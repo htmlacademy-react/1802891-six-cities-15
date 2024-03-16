@@ -6,8 +6,17 @@ import { Route, Routes } from 'react-router-dom';
 import { AppRoute, authorizationStatus } from '../const';
 import NotFoundPage from '../pages/not-found-page/not-found-page';
 import ProtectedRoute from './protected-route';
+import { useAppSelector } from '../hooks';
+import Loader from './loader/loader';
 
 export default function App() {
+
+  const isOffersDataLoading = useAppSelector((state) => state.isOfferDataLoadingStatus);
+
+  if (isOffersDataLoading) {
+    return <Loader />;
+  }
+
   return (
     <Routes>
       <Route path='/'>

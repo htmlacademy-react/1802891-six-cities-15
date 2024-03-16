@@ -1,4 +1,5 @@
 import { Offer } from '../types/offer';
+import { OfferPreviews } from '../types/offer-preview';
 import dayjs from 'dayjs';
 
 function getFavoritesByLocation(favorites: Offer[]) {
@@ -19,15 +20,15 @@ function humanizeOrderData(date: string, format: string) {
   return date ? dayjs(date).format(format) : '';
 }
 
-function sortPriceLow(offerA: Offer, offerB: Offer,) {
+function sortPriceLow(offerA: OfferPreviews, offerB: OfferPreviews,) {
   return offerA.price - offerB.price;
 }
 
-function sortPriceHigh(offerA: Offer, offerB: Offer,) {
+function sortPriceHigh(offerA: OfferPreviews, offerB: OfferPreviews,) {
   return offerB.price - offerA.price;
 }
 
-function sortRating(offerA: Offer, offerB: Offer,) {
+function sortRating(offerA: OfferPreviews, offerB: OfferPreviews,) {
   return offerB.rating - offerA.rating;
 }
 

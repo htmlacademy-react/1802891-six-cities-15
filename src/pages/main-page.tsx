@@ -10,11 +10,9 @@ import { LocationCity } from '../const';
 import ListLocation from '../components/list-location';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { selectCity, sortOffer } from '../store/action';
-import { offers } from '../mocks/offers';
 import PlacesOptions from '../components/places-options';
 
 export default function MainPage() {
-  const baseOffers = offers;
   const selectOffers = useAppSelector((state) => state.offers);
   const currentCity = useAppSelector((state) => state.city);
   const dispatch = useAppDispatch();
@@ -54,7 +52,7 @@ export default function MainPage() {
   const handleCurrentCityClick = (evt: SyntheticEvent<HTMLSpanElement>) => {
     evt.preventDefault();
 
-    const currentOffer = baseOffers.find((offer) => offer.city.name === evt.currentTarget.textContent);
+    const currentOffer = selectOffers.find((offer) => offer.city.name === evt.currentTarget.textContent);
 
 
     if (currentOffer !== undefined) {

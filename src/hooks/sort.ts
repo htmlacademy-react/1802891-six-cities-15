@@ -1,10 +1,10 @@
-import { Offer } from '../types/offer';
+import { OfferPreviews } from '../types/offer-preview';
 import { ListSort } from '../const';
 import { sortPriceLow, sortPriceHigh, sortRating } from '../utils/utils';
 import { LocationCity } from '../const';
 
-export function sortingOffers(action: string, state: Offer[], offers: Offer[]): Offer[] {
-  let sortOffers: Offer[] = [];
+export function sortingOffers(action: string, state: OfferPreviews[], offers: OfferPreviews[]): OfferPreviews[] {
+  let sortOffers: OfferPreviews[] = [];
   switch (action) {
     case ListSort.SORT_POPULAR:
       sortOffers = [...offers].filter((offer) => offer.city.name === LocationCity.PARIS);

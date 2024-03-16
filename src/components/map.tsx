@@ -1,6 +1,5 @@
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Offer } from '../types/offer';
 import { useEffect, useRef } from 'react';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../const';
 import { City } from '../types/city';
@@ -10,7 +9,7 @@ import { MapSize } from '../const';
 
 type MapProps = {
   city: City;
-  offers: Offer[];
+  offers: OfferPreviews[];
   selectedOffer: OfferPreviews | null;
 };
 
@@ -40,7 +39,7 @@ export default function Map(props: MapProps): JSX.Element {
           lat: offer.location.latitude,
           lng: offer.location.longitude
         }, {
-          icon: (selectedOffer !== null && offer.title === selectedOffer.title)
+          icon: (selectedOffer !== null && offer.id === selectedOffer.id)
             ? currentCustomIcon
             : defaultCustomIcon,
         })
