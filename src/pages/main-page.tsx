@@ -6,15 +6,13 @@ import { SyntheticEvent, useState } from 'react';
 import MainEmpty from '../components/main-empty';
 import { OptionListCard } from '../const';
 import { OfferPreviews } from '../types/offer-preview';
-import { locations } from '../mocks/locations';
+import { LocationCity } from '../const';
 import ListLocation from '../components/list-location';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { selectCity, sortOffer } from '../store/action';
-import { offers } from '../mocks/offers';
 import PlacesOptions from '../components/places-options';
 
 export default function MainPage() {
-  const baseOffers = offers;
   const selectOffers = useAppSelector((state) => state.offers);
   const currentCity = useAppSelector((state) => state.city);
   const dispatch = useAppDispatch();
@@ -54,7 +52,7 @@ export default function MainPage() {
   const handleCurrentCityClick = (evt: SyntheticEvent<HTMLSpanElement>) => {
     evt.preventDefault();
 
-    const currentOffer = baseOffers.find((offer) => offer.city.name === evt.currentTarget.textContent);
+    const currentOffer = selectOffers.find((offer) => offer.city.name === evt.currentTarget.textContent);
 
 
     if (currentOffer !== undefined) {
@@ -74,7 +72,7 @@ export default function MainPage() {
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
         <section className="locations container">
-          <ListLocation listLocations={locations} handleCurrentCityClick={handleCurrentCityClick} currentCity={selectedLocation} />
+          <ListLocation listLocations={LocationCity} handleCurrentCityClick={handleCurrentCityClick} currentCity={selectedLocation} />
         </section>
       </div>
       <div className="cities">

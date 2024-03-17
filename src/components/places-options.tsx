@@ -1,5 +1,5 @@
 import PlacesOption from './places-option';
-import { placesOption } from '../const';
+import { ListSort } from '../const';
 
 type PlacesOptionsProps = {
   isOpen: boolean;
@@ -7,9 +7,10 @@ type PlacesOptionsProps = {
 }
 
 export default function PlacesOptions({ isOpen, handelSortOfferClick }: PlacesOptionsProps) {
+  const listValuesSort = Object.values(ListSort);
   return (
     <ul className={`places__options places__options--custom ${isOpen && 'places__options--opened'}`}>
-      {placesOption.map((place) => <PlacesOption key={place} place={place} handelSortOfferClick={handelSortOfferClick} />)}
+      {listValuesSort.map((place) => <PlacesOption key={place} place={place} handelSortOfferClick={handelSortOfferClick} />)}
     </ul>
   );
 }

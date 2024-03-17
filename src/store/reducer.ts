@@ -1,35 +1,46 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { selectCity, sortOffer } from './action';
+import { selectCity, sortOffer, loadOffer, setOfferDataLoadingStatus, loadComments, chooseOffer, chooseId } from './action';
 import { offers } from '../mocks/offers';
-import { placesOption } from '../const';
-import { sortPriceLow, sortPriceHigh, sortRating } from '../utils/utils';
+import { sortingOffers } from '../hooks/sort';
+import { LocationCity } from '../const';
+import { Offer } from '../types/offer';
+import { OfferPreviews } from '../types/offer-preview';
+import { Comment } from '../types/comment';
 
 const initialState = {
-  city: 'Paris',
-  offers: [...offers].filter((offer) => offer.city.name === 'Paris'),
+  city: LocationCity.PARIS,
+  offers: <OfferPreviews[]>[],
+  initialOffers: <OfferPreviews[]>[],
+  isOfferDataLoadingStatus: false,
+  comments: <Comment[]>[],
+  currentOffer: <Offer><unknown>null,
+  idOffer: <string><unknown>null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(selectCity, (state, action) => {
       state.city = action.payload;
-      state.offers = [...offers].filter((offer) => offer.city.name === state.city);
+      state.offers = state.initialOffers.filter((offer) => offer.city.name === state.city);
     })
     .addCase(sortOffer, (state, action) => {
-      switch (action.payload) {
-        case placesOption[0]:
-          state.offers = [...offers].filter((offer) => offer.city.name === state.city);
-          break;
-        case placesOption[1]:
-          state.offers = state.offers.sort(sortPriceHigh);
-          break;
-        case placesOption[2]:
-          state.offers = state.offers.sort(sortPriceLow);
-          break;
-        case placesOption[3]:
-          state.offers = state.offers.sort(sortRating);
-          break;
-      }
+      state.offers = sortingOffers(action.payload, state.offers, offers);
+    })
+    .addCase(loadOffer, (state, action) => {
+      state.initialOffers = action.payload;
+      state.offers = state.initialOffers.filter((offer) => offer.city.name === state.city);
+    })
+    .addCase(setOfferDataLoadingStatus, (state, action) => {
+      state.isOfferDataLoadingStatus = action.payload;
+    })
+    .addCase(chooseId, (state, action) => {
+      state.idOffer = action.payload;
+    })
+    .addCase(loadComments, (state, action) => {
+      state.comments = action.payload;
+    })
+    .addCase(chooseOffer, (state, action) => {
+      state.currentOffer = action.payload;
     });
 });
 
