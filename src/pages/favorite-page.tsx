@@ -6,12 +6,19 @@ import { OptionCard } from '../const';
 import FavoritesEmpty from '../components/favorites-empty';
 import { getFavoritesByLocation } from '../utils/utils';
 import { useAppSelector } from '../hooks';
+import { useAppDispatch } from '../hooks';
+import { useEffect } from 'react';
+import { fetchFavoriteAction } from '../store/api-action';
 
 
 export default function FavoritePage() {
-  const offers = useAppSelector((state) => state.offers);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchFavoriteAction());
+  }, [dispatch]);
+  const dataFavorite = useAppSelector((store) => store.favorite);
 
-  const favorites = getFavoritesByLocation(offers);
+  const favorites = getFavoritesByLocation(dataFavorite);
   return (
     <Container mainClass='favorites'>
       <Helmet>
@@ -19,7 +26,7 @@ export default function FavoritePage() {
       </Helmet>
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-          {offers.length > 0 ?
+          {dataFavorite.length > 0 ?
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
               <ul className="favorites__list">

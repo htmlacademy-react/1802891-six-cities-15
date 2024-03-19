@@ -2,7 +2,7 @@ import Container from '../components/container';
 import { City } from '../types/city';
 import ListCards from '../components/list-cards';
 import Map from '../components/map';
-import { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
 import MainEmpty from '../components/main-empty';
 import { OptionListCard } from '../const';
 import { OfferPreviews } from '../types/offer-preview';
@@ -11,11 +11,19 @@ import ListLocation from '../components/list-location';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { selectCity, sortOffer } from '../store/action';
 import PlacesOptions from '../components/places-options';
+import Loader from '../components/loader/loader';
+import { fetchOffersAction } from '../store/api-action';
+
 
 export default function MainPage() {
   const selectOffers = useAppSelector((state) => state.offers);
   const currentCity = useAppSelector((state) => state.city);
   const dispatch = useAppDispatch();
+  const isOffersDataLoading = useAppSelector((state) => state.isOfferDataLoadingStatus);
+
+  useEffect(() => {
+    dispatch(fetchOffersAction());
+  }, [dispatch]);
 
   const [selectedOffer, setSelectedOffer] = useState<OfferPreviews | null>(
     null
@@ -64,8 +72,11 @@ export default function MainPage() {
       dispatch(selectCity(evt.currentTarget.textContent));
     }
 
-
   };
+
+  if (isOffersDataLoading) {
+    return <Loader />;
+  }
 
   return (
     <Container pageClass='page--gray page--main' mainClass='index'>
