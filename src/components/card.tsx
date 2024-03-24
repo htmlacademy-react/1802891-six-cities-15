@@ -2,10 +2,8 @@ import { Link } from 'react-router-dom';
 import { OfferPreviews } from '../types/offer-preview';
 import Rating from './rating';
 import { AppRoute } from '../const';
-import { fetchCommentsAction, fetchOfferAction } from '../store/api-action';
 import { chooseId } from '../store/action';
 import { useAppDispatch } from '../hooks';
-import { store } from '../store';
 
 type TCardProps = {
   offer: OfferPreviews;
@@ -23,8 +21,6 @@ export default function Card({ offer, optionCard, handelPointCardMouseOver }: TC
 
   const onTransmissionDataClick = () => {
     dispatch(chooseId(offer.id));
-    store.dispatch(fetchCommentsAction());
-    store.dispatch(fetchOfferAction());
   };
 
   const onPointCardMouseOver = () => {

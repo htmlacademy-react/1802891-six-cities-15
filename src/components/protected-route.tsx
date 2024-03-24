@@ -1,17 +1,18 @@
-import { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 import { AppRoute } from '../const';
+import { AuthorizationStatus } from '../const';
+import { useAppSelector } from '../hooks';
 
 type TProtectedRouteProps = {
-  children: ReactNode;
-  hasAccess: boolean;
+  children: JSX.Element;
 }
 
-export default function ProtectedRoute({ hasAccess, children }: TProtectedRouteProps) {
-  if (hasAccess) {
-    return children;
-  }
-
-  return <Navigate to={AppRoute.Login} />;
+export default function ProtectedRoute({ children }: TProtectedRouteProps): JSX.Element {
+  const authorizationStatus = useAppSelector((store) => store.authorizationStatus);
+  return (
+    authorizationStatus === AuthorizationStatus.AUTH
+      ? children
+      : <Navigate to={AppRoute.Login} />
+  );
 }
 

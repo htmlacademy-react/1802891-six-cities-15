@@ -2,13 +2,8 @@ enum AppRoute {
   Login = 'login',
   Main = '/',
   Favorites = 'favorites',
-  Offer = 'offer/:id',
+  Offer = 'offer',
 }
-
-const AuthorizationStatus = {
-  AUTH: true,
-  NO_AUTH: false,
-};
 
 const OptionCard = {
   CITIES_CARD: {
@@ -54,7 +49,14 @@ const APIRoute = {
   OFFERS: '/offers',
   FAVORITE: '/favorite',
   COMMENTS: '/comments',
-  USER: '/login',
+  LOGIN: '/login',
+  LOGOUT: 'logout',
+};
+
+const AuthorizationStatus = {
+  AUTH: 'AUTH',
+  NO_AUTH: 'NO_AUTH',
+  UN_KNOWN: 'UNKNOWN',
 };
 
 const URL_MARKER_DEFAULT = '../markup/img/pin.svg';
@@ -64,4 +66,4 @@ const URL_MARKER_CURRENT = '../markup/img/pin-active.svg';
 
 const CountStar: number = 5;
 
-export { CountStar, AppRoute, AuthorizationStatus as authorizationStatus, OptionCard, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, OptionListCard, MapSize, ListSort, ListLocation as LocationCity, APIRoute };
+export { CountStar, AppRoute, AuthorizationStatus, OptionCard, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, OptionListCard, MapSize, ListSort, ListLocation as LocationCity, APIRoute };

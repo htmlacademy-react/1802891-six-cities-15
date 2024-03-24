@@ -1,9 +1,8 @@
-import { Offer } from '../types/offer';
 import { OfferPreviews } from '../types/offer-preview';
 import dayjs from 'dayjs';
 
-function getFavoritesByLocation(favorites: Offer[]) {
-  return favorites.reduce<{ [key: string]: Offer[] }>((acc, current) => {
+function getFavoritesByLocation(favorites: OfferPreviews[]) {
+  return favorites.reduce<{ [key: string]: OfferPreviews[] }>((acc, current) => {
     const location = current.city.name;
     if (!(location in acc)) {
       acc[location] = [];

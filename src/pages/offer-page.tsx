@@ -6,13 +6,24 @@ import CommentsTemplate from '../components/comments-template';
 import { CountStar } from '../const';
 import ReviewsComments from '../components/reviews-comments';
 import Map from '../components/map';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { OptionListCard } from '../const';
 import ListCards from '../components/list-cards';
 import { OfferPreviews } from '../types/offer-preview';
 import { useAppSelector } from '../hooks';
+import { fetchCommentsAction, fetchOfferAction } from '../store/api-action';
+import { useAppDispatch } from '../hooks';
+import { useParams } from 'react-router-dom';
+import Loader from '../components/loader/loader';
 
 export default function OfferPage() {
+  const dispatch = useAppDispatch();
+  const { offerId } = useParams();
+  const isOffersDataLoading = useAppSelector((state) => state.isOfferDataLoadingStatus);
+  useEffect(() => {
+    dispatch(fetchCommentsAction(offerId as string));
+    dispatch(fetchOfferAction(offerId as string));
+  }, [dispatch, offerId]);
   const offer = useAppSelector((state) => state.currentOffer);
   const offersNearby = useAppSelector((state) => state.offers);
   const comments = useAppSelector((state) => state.comments);
@@ -26,12 +37,12 @@ export default function OfferPage() {
     }
   };
 
-  // const { offerId } = useParams();
-  // const offer = offers.find((offer) => offer.id === offerId);
-  // console.log(offer);
-
-  if (offer === undefined) {
+  if (offer === null) {
     return;
+  }
+
+  if (isOffersDataLoading) {
+    return <Loader />;
   }
 
   return (
@@ -133,3 +144,4 @@ export default function OfferPage() {
     </Container>
   );
 }
+
