@@ -9,6 +9,7 @@ import { useAppSelector } from '../hooks';
 import { useAppDispatch } from '../hooks';
 import { useEffect } from 'react';
 import { fetchFavoriteAction } from '../store/api-action';
+import { favoriteSelectors } from '../store/slice/favorite';
 
 
 export default function FavoritePage() {
@@ -16,7 +17,7 @@ export default function FavoritePage() {
   useEffect(() => {
     dispatch(fetchFavoriteAction());
   }, [dispatch]);
-  const dataFavorite = useAppSelector((store) => store.favorite);
+  const dataFavorite = useAppSelector(favoriteSelectors.favorite);
 
   const favorites = getFavoritesByLocation(dataFavorite);
   return (

@@ -1,18 +1,36 @@
-import { Navigate } from 'react-router-dom';
+import { Location, Navigate, useLocation } from 'react-router-dom';
 import { AppRoute } from '../const';
-import { AuthorizationStatus } from '../const';
 import { useAppSelector } from '../hooks';
+import { userSelector } from '../store/slice/user';
 
 type TProtectedRouteProps = {
   children: JSX.Element;
+  onlyUnAuth?: boolean;
 }
 
-export default function ProtectedRoute({ children }: TProtectedRouteProps): JSX.Element {
-  const authorizationStatus = useAppSelector((store) => store.authorizationStatus);
-  return (
-    authorizationStatus === AuthorizationStatus.AUTH
-      ? children
-      : <Navigate to={AppRoute.Login} />
-  );
+type FromState = {
+  from?: Location;
+}
+
+export default function ProtectedRoute({ children, onlyUnAuth }: TProtectedRouteProps): JSX.Element {
+  const user = useAppSelector(userSelector.dataUser);
+  const location: Location<FromState> = useLocation() as Location<FromState>;
+
+  if (onlyUnAuth && user) {
+    const from = location.state?.from || { pathname: AppRoute.Main };
+    return <Navigate to={from} />;
+  }
+
+  if (!onlyUnAuth && !user) {
+    return <Navigate state={{ from: location }} to={AppRoute.Login} />;
+  }
+
+  // return (
+  //   authorizationStatus === AuthorizationStatus.AUTH
+  //     ? children
+  //     : <Navigate to={AppRoute.Login} />
+  // );
+
+  return children;
 }
 

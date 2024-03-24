@@ -2,8 +2,6 @@ import { Link } from 'react-router-dom';
 import { OfferPreviews } from '../types/offer-preview';
 import Rating from './rating';
 import { AppRoute } from '../const';
-import { chooseId } from '../store/action';
-import { useAppDispatch } from '../hooks';
 
 type TCardProps = {
   offer: OfferPreviews;
@@ -17,11 +15,6 @@ type TCardProps = {
 
 export default function Card({ offer, optionCard, handelPointCardMouseOver }: TCardProps) {
   const { width, height, classCard } = optionCard;
-  const dispatch = useAppDispatch();
-
-  const onTransmissionDataClick = () => {
-    dispatch(chooseId(offer.id));
-  };
 
   const onPointCardMouseOver = () => {
     handelPointCardMouseOver(offer);
@@ -39,7 +32,7 @@ export default function Card({ offer, optionCard, handelPointCardMouseOver }: TC
         </div>}
 
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`/${AppRoute.Offer}/${offer.id}`} onClick={onTransmissionDataClick}>
+        <Link to={`/${AppRoute.Offer}/${offer.id}`}>
           <img className="place-card__image" src={`${offer.previewImage}`} width={width} height={height} alt="Place image" />
         </Link>
       </div>
@@ -58,7 +51,7 @@ export default function Card({ offer, optionCard, handelPointCardMouseOver }: TC
         </div>
         <Rating ratingClass="place-card" rating={offer.rating} />
         <h2 className="place-card__name" >
-          <Link to={`/${AppRoute.Offer}/${offer.id}`} state={offer} onClick={onTransmissionDataClick}>{offer.title}</Link>
+          <Link to={`/${AppRoute.Offer}/${offer.id}`} state={offer}>{offer.title}</Link>
         </h2>
         <p className="place-card__type" >{offer.type}</p>
       </div>
