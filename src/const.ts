@@ -59,6 +59,13 @@ const AuthorizationStatus = {
   UN_KNOWN: 'UNKNOWN',
 };
 
+const RequestStatus = {
+  SUCCESS: 'success',
+  LOADING: 'loading',
+  FAILED: 'failed',
+  NONE: 'none'
+};
+
 const URL_MARKER_DEFAULT = '../markup/img/pin.svg';
 
 const URL_MARKER_CURRENT = '../markup/img/pin-active.svg';
@@ -66,4 +73,4 @@ const URL_MARKER_CURRENT = '../markup/img/pin-active.svg';
 
 const CountStar: number = 5;
 
-export { CountStar, AppRoute, AuthorizationStatus, OptionCard, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, OptionListCard, MapSize, ListSort, ListLocation as LocationCity, APIRoute };
+export { CountStar, AppRoute, RequestStatus, AuthorizationStatus, OptionCard, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, OptionListCard, MapSize, ListSort, ListLocation as LocationCity, APIRoute };

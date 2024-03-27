@@ -3,7 +3,7 @@ import OfferPage from '../pages/offer-page';
 import FavoritePage from '../pages/favorite-page';
 import LoginPage from '../pages/login-page';
 import { Route, Routes } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../const';
+import { AppRoute } from '../const';
 import NotFoundPage from '../pages/not-found-page/not-found-page';
 import ProtectedRoute from './protected-route';
 import HistoryRouter from './history-route';
@@ -24,11 +24,11 @@ export default function App() {
           />
           <Route
             path={AppRoute.Favorites}
-            element={<ProtectedRoute authorizationStatus={AuthorizationStatus.UN_KNOWN}> <FavoritePage /></ProtectedRoute>}
+            element={<ProtectedRoute> <FavoritePage /></ProtectedRoute>}
           />
           <Route
             path={AppRoute.Login}
-            element={<LoginPage navigation={false} />}
+            element={<ProtectedRoute onlyUnAuth><LoginPage navigation={false} /></ProtectedRoute>}
           />
           <Route
             path='*'

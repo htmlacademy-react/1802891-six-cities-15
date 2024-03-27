@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { checkAuthAction, fetchUserAction } from '../store/api-action';
 import { logoutAction } from '../store/api-action';
 import { AuthorizationStatus } from '../const';
+import { userSelector } from '../store/slice/user';
 
 type THeaderProps = {
   navigation: boolean;
@@ -12,13 +13,14 @@ type THeaderProps = {
 
 export default function Header({ navigation }: THeaderProps) {
   const dispatch = useAppDispatch();
-  const favorite = useAppSelector((state) => state.favorite);
+  // const favorite = useAppSelector((state) => state.favorite);
+  const favorite = [];
   useEffect(() => {
     dispatch(fetchUserAction());
     dispatch(checkAuthAction());
   }, [dispatch]);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const user = useAppSelector((state) => state.dataUser);
+  const authorizationStatus = useAppSelector(userSelector.authorizationStatus);
+  const user = useAppSelector(userSelector.dataUser);
 
   const logoutAccount = () => {
     dispatch(logoutAction());

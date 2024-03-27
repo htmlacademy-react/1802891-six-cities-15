@@ -9,21 +9,22 @@ import { OfferPreviews } from '../types/offer-preview';
 import { LocationCity } from '../const';
 import ListLocation from '../components/list-location';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { selectCity, sortOffer } from '../store/action';
 import PlacesOptions from '../components/places-options';
 import Loader from '../components/loader/loader';
 import { fetchOffersAction } from '../store/api-action';
-
+import { offersSelectors } from '../store/slice/offers';
+import { selectCity, sortOffer } from '../store/slice/offers';
 
 export default function MainPage() {
-  const selectOffers = useAppSelector((state) => state.offers);
-  const currentCity = useAppSelector((state) => state.city);
+  const selectOffers = useAppSelector(offersSelectors.offers);
+  const currentCity = useAppSelector(offersSelectors.city);
   const dispatch = useAppDispatch();
-  const isOffersDataLoading = useAppSelector((state) => state.isOfferDataLoadingStatus);
+  const statusOffersDataLoading = useAppSelector(offersSelectors.isOffersDataLoading);
 
   useEffect(() => {
     dispatch(fetchOffersAction());
-  }, [dispatch]);
+    dispatch(selectCity(currentCity));
+  }, [currentCity, dispatch]);
 
   const [selectedOffer, setSelectedOffer] = useState<OfferPreviews | null>(
     null
@@ -31,6 +32,9 @@ export default function MainPage() {
 
   const [isOpenSort, setIsOpenSort] = useState<boolean>(
     false
+  );
+  const [sortName, setSortName] = useState<string>(
+    'popular'
   );
 
   const [selectedCity, setSelectedCity] = useState<City>({
@@ -47,6 +51,7 @@ export default function MainPage() {
   const handelSortOfferClick = (sortType: string) => {
     dispatch(sortOffer(sortType));
     setIsOpenSort(!isOpenSort);
+    setSortName(sortType);
   };
 
   const handelOpenPlacesClick = () => {
@@ -74,7 +79,7 @@ export default function MainPage() {
 
   };
 
-  if (isOffersDataLoading) {
+  if (statusOffersDataLoading) {
     return <Loader />;
   }
 
@@ -96,7 +101,7 @@ export default function MainPage() {
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0} onClick={handelOpenPlacesClick}>
-                  Popular
+                  {sortName}
                   <svg className="places__sorting-arrow" width="7" height="4">
                     <use xlinkHref="#icon-arrow-select"></use>
                   </svg>

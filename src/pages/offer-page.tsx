@@ -11,22 +11,28 @@ import { OptionListCard } from '../const';
 import ListCards from '../components/list-cards';
 import { OfferPreviews } from '../types/offer-preview';
 import { useAppSelector } from '../hooks';
-import { fetchCommentsAction, fetchOfferAction } from '../store/api-action';
+import { fetchCommentsAction, fetchOfferAction, fetchOfferNearbyAction } from '../store/api-action';
 import { useAppDispatch } from '../hooks';
 import { useParams } from 'react-router-dom';
 import Loader from '../components/loader/loader';
+import { offerSelector } from '../store/slice/offer';
+import { offersSelectors } from '../store/slice/offers';
+import { reviewsSelector } from '../store/slice/reviews';
 
 export default function OfferPage() {
   const dispatch = useAppDispatch();
   const { offerId } = useParams();
-  const isOffersDataLoading = useAppSelector((state) => state.isOfferDataLoadingStatus);
+  const isOffersDataLoading = useAppSelector(offersSelectors.isOffersDataLoading);
   useEffect(() => {
-    dispatch(fetchCommentsAction(offerId as string));
-    dispatch(fetchOfferAction(offerId as string));
+    Promise.all([
+      dispatch(fetchCommentsAction(offerId as string)),
+      dispatch(fetchOfferAction(offerId as string)),
+      dispatch(fetchOfferNearbyAction(offerId as string))
+    ]);
   }, [dispatch, offerId]);
-  const offer = useAppSelector((state) => state.currentOffer);
-  const offersNearby = useAppSelector((state) => state.offers);
-  const comments = useAppSelector((state) => state.comments);
+  const offer = useAppSelector(offerSelector.currentOffer);
+  const comments = useAppSelector(reviewsSelector.comments);
+  const nearby = useAppSelector(offerSelector.nearby);
   const [selectedOffer, setSelectedOffer] = useState<OfferPreviews | null>(
     null
   );
@@ -132,13 +138,13 @@ export default function OfferPage() {
           </div>
         </div>
         <section className="offer__map map">
-          <Map city={offer.city} offers={offersNearby} selectedOffer={selectedOffer} />
+          <Map city={offer.city} offers={nearby} selectedOffer={selectedOffer} />
         </section>
       </section>
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <ListCards offers={offersNearby} onListItemHover={handleListItemHover} extraClass={OptionListCard.FAVORITES_CARD} />
+          <ListCards offers={nearby} onListItemHover={handleListItemHover} extraClass={OptionListCard.FAVORITES_CARD} />
         </section>
       </div>
     </Container>
