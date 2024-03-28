@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { AppRoute, AuthorizationStatus, RequestStatus } from '../../const';
-import { fetchUserAction, loginAction, logoutAction } from '../api-action';
+import { checkAuthAction, loginAction, logoutAction } from '../api-action';
 import { TUser } from '../../types/user';
 
 type TInitialState = {
@@ -32,16 +32,17 @@ const userSlice = createSlice({
       .addCase(logoutAction.fulfilled, (state) => {
         state.isOfferDataLoadingStatus = false;
         state.authorizationStatus = AuthorizationStatus.NO_AUTH;
+        state.dataUser = null;
       })
-      .addCase(fetchUserAction.pending, (state) => {
+      .addCase(checkAuthAction.pending, (state) => {
         state.isOfferDataLoadingStatus = true;
       })
-      .addCase(fetchUserAction.fulfilled, (state, action) => {
+      .addCase(checkAuthAction.fulfilled, (state, action) => {
         state.isOfferDataLoadingStatus = false;
         state.authorizationStatus = AuthorizationStatus.AUTH;
         state.dataUser = action.payload;
       })
-      .addCase(fetchUserAction.rejected, (state) => {
+      .addCase(checkAuthAction.rejected, (state) => {
         state.isOfferDataLoadingStatus = false;
         state.authorizationStatus = AuthorizationStatus.NO_AUTH;
       });
