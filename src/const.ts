@@ -1,7 +1,7 @@
 enum AppRoute {
-  Login = 'login',
+  Login = '/login',
   Main = '/',
-  Favorites = 'favorites',
+  Favorites = '/favorites',
   Offer = 'offer',
 }
 
@@ -66,6 +66,20 @@ const RequestStatus = {
   NONE: 'none'
 };
 
+const SizeOptionButtonFavorite = {
+  card: {
+    extraClass: 'place-card',
+    width: '18',
+    height: '19',
+  },
+  offer: {
+    extraClass: 'offer',
+    width: '31',
+    height: '33',
+  }
+};
+
+
 const URL_MARKER_DEFAULT = '../markup/img/pin.svg';
 
 const URL_MARKER_CURRENT = '../markup/img/pin-active.svg';
@@ -73,4 +87,4 @@ const URL_MARKER_CURRENT = '../markup/img/pin-active.svg';
 
 const CountStar: number = 5;
 
-export { CountStar, AppRoute, RequestStatus, AuthorizationStatus, OptionCard, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, OptionListCard, MapSize, ListSort, ListLocation as LocationCity, APIRoute };
+export { CountStar, AppRoute, SizeOptionButtonFavorite, RequestStatus, AuthorizationStatus, OptionCard, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, OptionListCard, MapSize, ListSort, ListLocation as LocationCity, APIRoute };
